@@ -53,7 +53,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
             const month = ('0' + (date.getMonth() + 1)).slice(-2);
             const year = date.getFullYear();
             answer = `${day}.${month}.${year}`;
-          } catch (e) {
+          } catch {
             // Якщо не дата, залишити як є
           }
         }
