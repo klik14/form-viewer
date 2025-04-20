@@ -20,7 +20,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     const sheets = google.sheets({ version: 'v4', auth });
     const spreadsheetId = '1vVizATOZnrr0XRSlD247eBSLu8bADdNxc98WQTGnqHU';
     const sheetName = 'Відповіді форми (1)';
-    const range = `${sheetName}!A${Number(id) + 1}:AM${Number(id) + 1}`; // Змінили Z на AM
+    const range = `${sheetName}!A${Number(id) + 1}:AM${Number(id) + 1}`;
 
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId,
@@ -34,7 +34,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 
     const headers = (await sheets.spreadsheets.values.get({
       spreadsheetId,
-      range: `${sheetName}!A1:AM1`, // Змінили Z на AM
+      range: `${sheetName}!A1:AM1`,
     })).data.values?.[0];
 
     if (!headers) {
@@ -45,18 +45,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     const result = headers
       .map((header, index) => {
         if (excludedColumns.includes(index)) return null;
-        let answer = data[index] || '';
-        if ([6, 7].includes(index) && answer) {
-          try {
-            const date = new Date(answer);
-            const day = ('0' + date.getDate()).slice(-2);
-            const month = ('0' + (date.getMonth() + 1)).slice(-2);
-            const year = date.getFullYear();
-            answer = `${day}.${month}.${year}`;
-          } catch {
-            // Якщо не дата, залишити як є
-          }
-        }
+        const answer = data[index] || ''; // Залишаємо відповідь як є, без форматування
         return { question: header, answer };
       })
       .filter((item): item is { question: string; answer: string } => item !== null && item.answer !== 
