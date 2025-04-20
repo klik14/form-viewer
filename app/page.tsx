@@ -3,10 +3,7 @@ import styles from './form/[id]/form.module.css'; // Імпортуємо сти
 export default function Home() {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Ласкаво просимо до Form Viewer</h1>
-      <p className={styles.answer}>
-        Це додаток для перегляду відповідей із анкет. Виберіть анкету за номером:
-      </p>
+      <h1 className={styles.title}>Form Viewer</h1>
     </div>
   );
 }
