@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import styles from './form.module.css';
 
 type FormData = { question: string; answer: string }[];
 
@@ -21,18 +22,16 @@ export default function Form() {
     }
   }, [id]);
 
-  if (error) return <div className="container">Error: {error}</div>;
-  if (!data) return <div className="container">Loading...</div>;
+  if (error) return <div className={styles.container}>Error: {error}</div>;
+  if (!data) return <div className={styles.container}>Loading...</div>;
 
   return (
-    <div className="container min-h-screen bg-gray-100 p-8">
-      <h1 className="mb-6 text-center text-3xl font-bold text-gray-800 sm:text-4xl">
-        Анкета клієнта №{Number(id) + 1}
-      </h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Анкета клієнта №{Number(id) + 1}</h1>
       {data.map((item, index) => (
-        <div key={index} className="question mb-6 rounded-lg bg-white p-6 shadow-sm">
-          <h2 className="mb-3 text-lg font-normal text-gray-600 sm:text-xl">{item.question}</h2>
-          <p className="text-xl font-bold text-gray-900 sm:text-2xl">
+        <div key={index} className={styles.question}>
+          <h2 className={styles.questionTitle}>{item.question}</h2>
+          <p className={styles.answer}>
             {item.answer.includes('drive.google.com') ? (
               item.answer.split(',').map((url, i) => (
                 <span key={i}>
@@ -40,7 +39,7 @@ export default function Form() {
                     href={url.trim()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 underline hover:text-blue-800"
+                    className={styles.link}
                   >
                     {url.trim()}
                   </a>
